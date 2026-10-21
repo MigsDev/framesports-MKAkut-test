@@ -1,0 +1,275 @@
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (4.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mClip Load (2.0ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Three-pointer compilation"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Grand slam highlight"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Overtime winner"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Sprint finish analysis"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Defensive masterclass"], ["LIMIT", 1]]
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 05:35:52 +0000
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 05:35:52 +0000
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Count (11.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (2.4ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (1.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 239ms (Views: 21.6ms | ActiveRecord: 18.5ms (5 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 05:35:52 +0000
+  [1m[36mClip Load (62.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 87ms (Views: -18.9ms | ActiveRecord: 254.9ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 05:35:52 +0000
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (2.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.5ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 15ms (Views: 2.3ms | ActiveRecord: 3.5ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (3.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mClip Load (1.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Three-pointer compilation"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Grand slam highlight"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Overtime winner"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Sprint finish analysis"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Defensive masterclass"], ["LIMIT", 1]]
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/api/sports_feeds?league=4328&utm_source=chatgpt.com" for 172.18.0.1 at 2026-10-21 06:03:18 +0000
+Processing by Api::SportsFeedsController#index as HTML
+  Parameters: {"league"=>"4328", "utm_source"=>"chatgpt.com"}
+Completed 200 OK in 822ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 32.7ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.1 at 2026-10-21 06:03:35 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328"}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (4.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (3.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (3.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mClip Load (2.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Three-pointer compilation"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Grand slam highlight"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Overtime winner"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Sprint finish analysis"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Defensive masterclass"], ["LIMIT", 1]]
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (4.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (3.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mClip Load (1.1ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Three-pointer compilation"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Grand slam highlight"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Overtime winner"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Sprint finish analysis"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Defensive masterclass"], ["LIMIT", 1]]
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 06:49:16 +0000
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 06:49:16 +0000
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (61.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Count (5.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Load (3.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+  [1m[36mClip Sum (4.9ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+Completed 200 OK in 33ms (Views: 25.2ms | ActiveRecord: 100.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mClip Count (5.8ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 06:49:16 +0000
+  [1m[36mClip Load (1.9ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 249ms (Views: 8.0ms | ActiveRecord: 101.1ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 06:49:16 +0000
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Load (1.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 6ms (Views: 4.6ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.2ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 14ms (Views: 7.2ms | ActiveRecord: 1.3ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:20 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 676ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:20 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:27 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:45 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:45 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:49 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:50 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 06:49:50 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (5.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (3.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mClip Load (1.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Three-pointer compilation"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Grand slam highlight"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Overtime winner"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Sprint finish analysis"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Defensive masterclass"], ["LIMIT", 1]]
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/api/clips/10/comments" for 172.18.0.4 at 2026-10-21 07:34:05 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"10", "clip_comment"=>{}}
+  [1m[36mClip Load (4.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mClipComment Average (3.2ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Load (2.1ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 10], ["LIMIT", 100]]
+Completed 200 OK in 179ms (Views: 14.5ms | ActiveRecord: 77.7ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/10/comments" for 172.18.0.4 at 2026-10-21 07:34:06 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"10", "clip_comment"=>{}}
+  [1m[36mClip Load (1.1ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Count (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Load (0.3ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 10], ["LIMIT", 100]]
+Completed 200 OK in 16ms (Views: 5.4ms | ActiveRecord: 2.5ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:34:25 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 728ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:34:26 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:34:31 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 07:35:44 +0000
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 07:35:44 +0000
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (4.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Count (5.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.5ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 33ms (Views: 5.2ms | ActiveRecord: 11.3ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 07:35:44 +0000
+  [1m[36mClip Load (33.6ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 45ms (Views: 1.7ms | ActiveRecord: 41.9ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 07:35:44 +0000
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (1.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.5ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 32ms (Views: 4.4ms | ActiveRecord: 3.7ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 8ms (Views: 7.3ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+

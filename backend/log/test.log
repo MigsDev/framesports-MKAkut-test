@@ -1,0 +1,241 @@
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::InternalMetadata Load (8.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (6.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public[0m
+  [1m[35m (62.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "framesports_test"[0m
+  [1m[35m (109.5ms)[0m  [1m[35mCREATE DATABASE "framesports_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (28.5ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "clip_comments" CASCADE[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE TABLE "clip_comments" ("id" bigserial primary key, "clip_id" bigint NOT NULL, "author" character varying(80) NOT NULL, "body" text NOT NULL, "rating" integer, "kind" character varying DEFAULT 'comment' NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT clip_comments_rating_range CHECK (rating IS NULL OR (rating >= 1 AND rating <= 5)))[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE INDEX "index_clip_comments_on_clip_id_and_created_at" ON "clip_comments" ("clip_id", "created_at")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE INDEX "index_clip_comments_on_clip_id" ON "clip_comments" ("clip_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "clips" CASCADE[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "clips" ("id" bigserial primary key, "title" character varying NOT NULL, "sport" character varying NOT NULL, "status" character varying DEFAULT 'draft' NOT NULL, "views" integer DEFAULT 0 NOT NULL, "duration_seconds" integer DEFAULT 60 NOT NULL, "video_url" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT clips_duration_positive CHECK (duration_seconds > 0), CONSTRAINT clips_views_nonnegative CHECK (views >= 0))[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_clips_on_sport" ON "clips" ("sport")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE INDEX "index_clips_on_status" ON "clips" ("status")[0m
+  [1m[35m (3.3ms)[0m  [1m[35mALTER TABLE "clip_comments" ADD CONSTRAINT "fk_rails_f5d12a9383"
+FOREIGN KEY ("clip_id")
+  REFERENCES "clips" ("id")
+[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20261021000000)[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20261018000000);[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-10-21 06:03:59.317867', '2026-10-21 06:03:59.317870') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '007b5a163df4902d26e475f89e6be7639bd47881', '2026-10-21 06:03:59.327025', '2026-10-21 06:03:59.327028') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------
+ClipTest: test_rejects_invalid_video_url
+----------------------------------------
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+-----------------------------------
+ClipTest: test_accepts_valid_record
+-----------------------------------
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------------------------------
+Api::SportsFeedsControllerTest: test_returns_fixtures_from_the_feed_service
+---------------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------------------------
+Api::SportsFeedsControllerTest: test_rejects_unsupported_leagues
+----------------------------------------------------------------
+Started GET "/api/sports_feeds?league=not-a-league" for 127.0.0.1 at 2026-10-21 06:04:00 +0000
+Processing by Api::SportsFeedsController#index as HTML
+  Parameters: {"league"=>"not-a-league"}
+Completed 422 Unprocessable Content in 34ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------
+Api::ClipsControllerTest: test_rejects_invalid_clip
+---------------------------------------------------
+Started POST "/api/clips" for 127.0.0.1 at 2026-10-21 06:04:00 +0000
+Processing by Api::ClipsController#create as JSON
+  Parameters: {"clip"=>{"title"=>"", "sport"=>"Football", "duration_seconds"=>-1}}
+Completed 422 Unprocessable Content in 13ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+Api::ClipsControllerTest: test_creates_and_lists_a_clip
+-------------------------------------------------------
+  [1m[36mClip Count (1.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Started POST "/api/clips" for 127.0.0.1 at 2026-10-21 06:04:00 +0000
+Processing by Api::ClipsController#create as JSON
+  Parameters: {"clip"=>{"title"=>"Test goal", "sport"=>"Football", "status"=>"draft", "views"=>0, "duration_seconds"=>30}}
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (2.6ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Test goal"], ["sport", "Football"], ["status", "draft"], ["views", 0], ["duration_seconds", 30], ["video_url", nil], ["created_at", "2026-10-21 06:04:00.840784"], ["updated_at", "2026-10-21 06:04:00.840784"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 29ms (Views: 1.5ms | ActiveRecord: 3.1ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mClip Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Started GET "/api/clips?search=Test+goal" for 127.0.0.1 at 2026-10-21 06:04:00 +0000
+Processing by Api::ClipsController#index as HTML
+  Parameters: {"search"=>"Test goal"}
+  [1m[36mClip Load (1.7ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE (title ILIKE $1) ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $2[0m  [[nil, "%Test goal%"], ["LIMIT", 100]]
+Completed 200 OK in 7ms (Views: 4.6ms | ActiveRecord: 1.7ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+------------------------------------------------------------
+Api::ClipCommentsControllerTest: test_rejects_blank_feedback
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.0ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Goal"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 06:04:00.890855"], ["updated_at", "2026-10-21 06:04:00.890855"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/clips/2/comments" for 127.0.0.1 at 2026-10-21 06:04:00 +0000
+Processing by Api::ClipCommentsController#create as JSON
+  Parameters: {"comment"=>{"author"=>"", "body"=>"", "rating"=>9}, "clip_id"=>"2", "clip_comment"=>{}}
+  [1m[36mClip Load (0.8ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Completed 422 Unprocessable Content in 119ms (Views: 0.1ms | ActiveRecord: 3.0ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------------------
+Api::ClipCommentsControllerTest: test_create_and_list_feedback
+--------------------------------------------------------------
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.2ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Goal"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 06:04:01.082718"], ["updated_at", "2026-10-21 06:04:01.082718"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClipComment Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments"[0m
+Started POST "/api/clips/3/comments" for 127.0.0.1 at 2026-10-21 06:04:01 +0000
+Processing by Api::ClipCommentsController#create as JSON
+  Parameters: {"comment"=>{"author"=>"Viewer", "body"=>"Great finish", "rating"=>5, "kind"=>"comment"}, "clip_id"=>"3", "clip_comment"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClipComment Create (1.7ms)[0m  [1m[32mINSERT INTO "clip_comments" ("clip_id", "author", "body", "rating", "kind", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["clip_id", 3], ["author", "Viewer"], ["body", "Great finish"], ["rating", 5], ["kind", "comment"], ["created_at", "2026-10-21 06:04:01.105755"], ["updated_at", "2026-10-21 06:04:01.105755"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 43ms (ActiveRecord: 2.2ms (2 queries, 0 cached) | GC: 0.0ms)
+  
+NameError (uninitialized constant ApplicationJob):
+  
+app/jobs/telegram_notification_job.rb:1:in `<main>'
+app/controllers/api/clip_comments_controller.rb:19:in `create'
+test/controllers/api/clip_comments_controller_test.rb:10:in `block (2 levels) in <class:ClipCommentsControllerTest>'
+test/controllers/api/clip_comments_controller_test.rb:9:in `block in <class:ClipCommentsControllerTest>'
+  [1m[36mClipComment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------------------------------------
+TelegramNotificationServiceTest: test_does_not_attempt_delivery_without_configuration
+-------------------------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::InternalMetadata Load (1.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::InternalMetadata Load (2.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::InternalMetadata Load (2.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------
+Api::ClipsControllerTest: test_rejects_invalid_clip
+---------------------------------------------------
+Started POST "/api/clips" for 127.0.0.1 at 2026-10-21 06:48:11 +0000
+Processing by Api::ClipsController#create as JSON
+  Parameters: {"clip"=>{"title"=>"", "sport"=>"Football", "duration_seconds"=>-1}}
+Completed 422 Unprocessable Content in 88ms (Views: 0.3ms | ActiveRecord: 15.1ms (0 queries, 0 cached) | GC: 0.6ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+Api::ClipsControllerTest: test_creates_and_lists_a_clip
+-------------------------------------------------------
+  [1m[36mClip Count (4.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Started POST "/api/clips" for 127.0.0.1 at 2026-10-21 06:48:11 +0000
+Processing by Api::ClipsController#create as JSON
+  Parameters: {"clip"=>{"title"=>"Test goal", "sport"=>"Football", "status"=>"draft", "views"=>0, "duration_seconds"=>30}}
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (2.6ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Test goal"], ["sport", "Football"], ["status", "draft"], ["views", 0], ["duration_seconds", 30], ["video_url", nil], ["created_at", "2026-10-21 06:48:11.715033"], ["updated_at", "2026-10-21 06:48:11.715033"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 19ms (Views: 1.6ms | ActiveRecord: 3.3ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mClip Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Started GET "/api/clips?search=Test+goal" for 127.0.0.1 at 2026-10-21 06:48:11 +0000
+Processing by Api::ClipsController#index as HTML
+  Parameters: {"search"=>"Test goal"}
+  [1m[36mClip Load (2.8ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE (title ILIKE $1) ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $2[0m  [[nil, "%Test goal%"], ["LIMIT", 100]]
+Completed 200 OK in 9ms (Views: 4.9ms | ActiveRecord: 2.8ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+------------------------------------------------------------
+Api::ClipCommentsControllerTest: test_rejects_blank_feedback
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.2ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Goal"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 06:48:11.757383"], ["updated_at", "2026-10-21 06:48:11.757383"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/clips/5/comments" for 127.0.0.1 at 2026-10-21 06:48:11 +0000
+Processing by Api::ClipCommentsController#create as JSON
+  Parameters: {"comment"=>{"author"=>"", "body"=>"", "rating"=>9}, "clip_id"=>"5", "clip_comment"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+Completed 422 Unprocessable Content in 54ms (Views: 0.2ms | ActiveRecord: 2.4ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------------------
+Api::ClipCommentsControllerTest: test_create_and_list_feedback
+--------------------------------------------------------------
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.7ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Goal"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 06:48:11.895399"], ["updated_at", "2026-10-21 06:48:11.895399"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClipComment Count (2.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments"[0m
+Started POST "/api/clips/6/comments" for 127.0.0.1 at 2026-10-21 06:48:11 +0000
+Processing by Api::ClipCommentsController#create as JSON
+  Parameters: {"comment"=>{"author"=>"Viewer", "body"=>"Great finish", "rating"=>5, "kind"=>"comment"}, "clip_id"=>"6", "clip_comment"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClipComment Create (2.1ms)[0m  [1m[32mINSERT INTO "clip_comments" ("clip_id", "author", "body", "rating", "kind", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["clip_id", 6], ["author", "Viewer"], ["body", "Great finish"], ["rating", 5], ["kind", "comment"], ["created_at", "2026-10-21 06:48:11.969110"], ["updated_at", "2026-10-21 06:48:11.969110"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 17ms (Views: 1.0ms | ActiveRecord: 2.7ms (2 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mClipComment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments"[0m
+Started GET "/api/clips/6/comments" for 127.0.0.1 at 2026-10-21 06:48:11 +0000
+Processing by Api::ClipCommentsController#index as HTML
+  Parameters: {"clip_id"=>"6"}
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.9ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 6]]
+  [1m[36mClipComment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 6]]
+  [1m[36mClipComment Load (0.4ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 6], ["LIMIT", 100]]
+Completed 200 OK in 16ms (Views: 5.7ms | ActiveRecord: 1.7ms (4 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------------------------------
+Api::SportsFeedsControllerTest: test_returns_fixtures_from_the_feed_service
+---------------------------------------------------------------------------
+Started GET "/api/sports_feeds?league=4328" for 127.0.0.1 at 2026-10-21 06:48:12 +0000
+Processing by Api::SportsFeedsController#index as HTML
+  Parameters: {"league"=>"4328"}
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------------------------
+Api::SportsFeedsControllerTest: test_rejects_unsupported_leagues
+----------------------------------------------------------------
+Started GET "/api/sports_feeds?league=not-a-league" for 127.0.0.1 at 2026-10-21 06:48:12 +0000
+Processing by Api::SportsFeedsController#index as HTML
+  Parameters: {"league"=>"not-a-league"}
+Completed 422 Unprocessable Content in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------
+ClipTest: test_rejects_invalid_video_url
+----------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-----------------------------------
+ClipTest: test_accepts_valid_record
+-----------------------------------
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------------------------------------
+TelegramNotificationServiceTest: test_does_not_attempt_delivery_without_configuration
+-------------------------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m

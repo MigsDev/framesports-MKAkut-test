@@ -1,0 +1,12 @@
+.fixtures-panel { min-height: 300px; }
+.fixture-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.fixture-controls label { font-size: 13px; color: #64748b; }
+.fixture-controls select { padding: 9px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; color: #172033; }
+.fixture-list { display: grid; gap: 12px; }
+.fixture-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+.fixture-card strong { font-size: 15px; }
+.fixture-card p { font-size: 13px; color: #64748b; margin: 6px 0 0; }
+.fixture-date { color: #475569; display:flex; align-items:center; gap:6px; font-size:13px; white-space: nowrap; }
+.fixture-credit { display:flex; gap:8px; align-items:center; color:#64748b; font-size:12px; margin-top:18px; }
+.section-heading h2 svg { vertical-align:middle; }
+@media(max-width:750px) { .fixture-card { align-items:flex-start; flex-direction:column; } .fixture-date { white-space:normal; } }
