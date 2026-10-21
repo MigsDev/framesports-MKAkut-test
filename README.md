@@ -173,3 +173,56 @@ docker compose exec api bin/rails test
 ```
 
 Expected: 0 failures and 0 errors. If a test still fails, inspect the first exception with `docker compose logs api --tail=120` and `docker compose exec api bin/rails test test/controllers/api/clip_comments_controller_test.rb -v`. The commands above preserve the existing named PostgreSQL volume; never use `docker compose down -v` for an update.
+
+
+## Click-based video view tracking (new)
+
+Every explicit **Play** click in the Clip Library, Recently Added, or Analytics videos report
+opens the video player and makes one `POST /api/clips/:id/view` request. Rails increments
+`clips.views` atomically in PostgreSQL and responds with `{ "id": 1, "views": 11 }`.
+React updates that clip's count, its open-player state, and Overview/Analytics total views
+immediately after a successful response; the recorded value remains after a page refresh.
+A failed API call shows an error instead of pretending the view was saved.
+
+**Not counted:** thumbnail hover previews, browsing, searching, page refreshes, and
+playing/pausing within an already open player. Closing and reopening the player counts
+another view, by design. This measures **video opens/clicks**, not unique viewers,
+verified playback completions, or real-time streams across all connected browsers.
+Other browsers see updated counts when they refresh; WebSocket/SSE would be a
+separate enhancement for immediate cross-browser broadcasts.
+
+The clip editor shows current views as **read-only**; arbitrary create/update requests
+cannot assign the `views` field. Existing view counts and data are preserved and no new
+migration is required.
+
+### API checks using PowerShell
+
+In the project directory (with Docker running):
+
+```powershell
+docker compose up -d --build api web
+docker compose exec api bin/rails test
+curl.exe http://localhost:3000/api/clips/1
+curl.exe -X POST http://localhost:3000/api/clips/1/view
+curl.exe http://localhost:3000/api/clips/1
+curl.exe http://localhost:3000/api/dashboard
+```
+
+For a manual browser check, note a clip's count in the Clip Library, click its Play
+thumbnail once, and verify the count increases by one. Repeat from Analytics and
+Recently Added, then refresh the browser and check the value persists. Hover should
+never increase views.
+
+**Important:** The POST test increments clip 1 for real. Use a test clip to avoid
+modifying the analytics of an existing production clip. Keep the current Compose
+project identity (`framesports-practice`) and named `pgdata` volume when updating;
+**never** run `docker compose down -v` or `rails db:reset` to install this fix.
+
+**Seed safety:** The original startup script used to overwrite demo clip view counts
+on every Rails API restart. The updated `db/seeds.rb` now creates only missing demo
+clips, leaving all previously recorded views and edits unchanged.
+
+**Docker startup safety:** The `api` service no longer runs `db:seed` on every boot;
+`db:prepare` keeps existing databases migrated without overwriting tracked views.
+To insert missing sample clips manually on a new development database only, run
+`docker compose exec api bin/rails db:seed`.

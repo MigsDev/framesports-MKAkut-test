@@ -239,3 +239,202 @@ ClipTest: test_accepts_valid_record
 TelegramNotificationServiceTest: test_does_not_attempt_delivery_without_configuration
 -------------------------------------------------------------------------------------
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::InternalMetadata Load (4.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (3.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------------------------------------
+TelegramNotificationServiceTest: test_does_not_attempt_delivery_without_configuration
+-------------------------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------------------------------
+Api::SportsFeedsControllerTest: test_returns_fixtures_from_the_feed_service
+---------------------------------------------------------------------------
+Started GET "/api/sports_feeds?league=4328" for 127.0.0.1 at 2026-10-21 08:31:34 +0000
+Processing by Api::SportsFeedsController#index as HTML
+  Parameters: {"league"=>"4328"}
+Completed 200 OK in 27ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------------------------------
+Api::SportsFeedsControllerTest: test_rejects_unsupported_leagues
+----------------------------------------------------------------
+Started GET "/api/sports_feeds?league=not-a-league" for 127.0.0.1 at 2026-10-21 08:31:34 +0000
+Processing by Api::SportsFeedsController#index as HTML
+  Parameters: {"league"=>"not-a-league"}
+Completed 422 Unprocessable Content in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+------------------------------------------------------------
+Api::ClipCommentsControllerTest: test_rejects_blank_feedback
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (7.0ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Goal"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 08:31:34.685933"], ["updated_at", "2026-10-21 08:31:34.685933"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/clips/7/comments" for 127.0.0.1 at 2026-10-21 08:31:34 +0000
+Processing by Api::ClipCommentsController#create as JSON
+  Parameters: {"comment"=>{"author"=>"", "body"=>"", "rating"=>9}, "clip_id"=>"7", "clip_comment"=>{}}
+  [1m[36mClip Load (1.1ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+Completed 422 Unprocessable Content in 72ms (Views: 0.3ms | ActiveRecord: 3.3ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------------------
+Api::ClipCommentsControllerTest: test_create_and_list_feedback
+--------------------------------------------------------------
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.1ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Goal"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 08:31:34.844422"], ["updated_at", "2026-10-21 08:31:34.844422"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClipComment Count (2.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments"[0m
+Started POST "/api/clips/8/comments" for 127.0.0.1 at 2026-10-21 08:31:34 +0000
+Processing by Api::ClipCommentsController#create as JSON
+  Parameters: {"comment"=>{"author"=>"Viewer", "body"=>"Great finish", "rating"=>5, "kind"=>"comment"}, "clip_id"=>"8", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClipComment Create (3.2ms)[0m  [1m[32mINSERT INTO "clip_comments" ("clip_id", "author", "body", "rating", "kind", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["clip_id", 8], ["author", "Viewer"], ["body", "Great finish"], ["rating", 5], ["kind", "comment"], ["created_at", "2026-10-21 08:31:34.879681"], ["updated_at", "2026-10-21 08:31:34.879681"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 23ms (Views: 1.5ms | ActiveRecord: 4.3ms (2 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mClipComment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments"[0m
+Started GET "/api/clips/8/comments" for 127.0.0.1 at 2026-10-21 08:31:34 +0000
+Processing by Api::ClipCommentsController#index as HTML
+  Parameters: {"clip_id"=>"8"}
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mClipComment Average (1.1ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 8]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 8]]
+  [1m[36mClipComment Load (1.6ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 8], ["LIMIT", 100]]
+Completed 200 OK in 24ms (Views: 7.9ms | ActiveRecord: 3.2ms (4 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+--------------------------------------------------------------------------
+ClipTest: test_seed_data_does_not_reset_an_existing_video's_recorded_views
+--------------------------------------------------------------------------
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.4ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Final-minute comeback"], ["sport", "Football"], ["status", "published"], ["views", 0], ["duration_seconds", 87], ["video_url", nil], ["created_at", "2026-10-21 08:31:34.947761"], ["updated_at", "2026-10-21 08:31:34.947761"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Update (2.3ms)[0m  [1m[33mUPDATE "clips" SET "views" = $1, "updated_at" = $2 WHERE "clips"."id" = $3[0m  [["views", 49210], ["updated_at", "2026-10-21 08:31:34.959457"], ["id", 9]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Final-minute comeback"], ["LIMIT", 1]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Three-pointer compilation"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (0.9ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Three-pointer compilation"], ["sport", "Basketball"], ["status", "published"], ["views", 9250], ["duration_seconds", 112], ["video_url", nil], ["created_at", "2026-10-21 08:31:34.993126"], ["updated_at", "2026-10-21 08:31:34.993126"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Grand slam highlight"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (0.8ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Grand slam highlight"], ["sport", "Tennis"], ["status", "reviewing"], ["views", 420], ["duration_seconds", 64], ["video_url", nil], ["created_at", "2026-10-21 08:31:34.999161"], ["updated_at", "2026-10-21 08:31:34.999161"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Overtime winner"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (0.8ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Overtime winner"], ["sport", "Hockey"], ["status", "published"], ["views", 7510], ["duration_seconds", 48], ["video_url", nil], ["created_at", "2026-10-21 08:31:35.003409"], ["updated_at", "2026-10-21 08:31:35.003409"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Sprint finish analysis"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (0.8ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Sprint finish analysis"], ["sport", "Athletics"], ["status", "draft"], ["views", 0], ["duration_seconds", 76], ["video_url", nil], ["created_at", "2026-10-21 08:31:35.009766"], ["updated_at", "2026-10-21 08:31:35.009766"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClip Load (0.1ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."title" = $1 LIMIT $2[0m  [["title", "Defensive masterclass"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.1ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Defensive masterclass"], ["sport", "Football"], ["status", "reviewing"], ["views", 1830], ["duration_seconds", 94], ["video_url", nil], ["created_at", "2026-10-21 08:31:35.014813"], ["updated_at", "2026-10-21 08:31:35.014813"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+----------------------------------------
+ClipTest: test_rejects_invalid_video_url
+----------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-----------------------------------
+ClipTest: test_accepts_valid_record
+-----------------------------------
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-----------------------------------------------------------------------------
+Api::ClipsControllerTest: test_editing_a_clip_cannot_overwrite_recorded_views
+-----------------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.3ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Protected views"], ["sport", "Tennis"], ["status", "published"], ["views", 8], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 08:31:35.042955"], ["updated_at", "2026-10-21 08:31:35.042955"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started PATCH "/api/clips/15" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#update as JSON
+  Parameters: {"clip"=>{"title"=>"Updated title", "views"=>0}, "id"=>"15"}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+[31mUnpermitted parameter: :views. Context: { controller: Api::ClipsController, action: update, request: #<ActionDispatch::Request:0x00007199bf59a1f8>, params: {"clip"=>{"title"=>"Updated title", "views"=>0}, "controller"=>"api/clips", "action"=>"update", "id"=>"15"} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Update (1.1ms)[0m  [1m[33mUPDATE "clips" SET "title" = $1, "updated_at" = $2 WHERE "clips"."id" = $3[0m  [["title", "Updated title"], ["updated_at", "2026-10-21 08:31:35.074955"], ["id", 15]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 12ms (Views: 0.6ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------
+Api::ClipsControllerTest: test_creates_and_lists_a_clip
+-------------------------------------------------------
+  [1m[36mClip Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Started POST "/api/clips" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#create as JSON
+  Parameters: {"clip"=>{"title"=>"Test goal", "sport"=>"Football", "status"=>"draft", "views"=>0, "duration_seconds"=>30}}
+[31mUnpermitted parameter: :views. Context: { controller: Api::ClipsController, action: create, request: #<ActionDispatch::Request:0x00007199bf55b048>, params: {"clip"=>{"title"=>"Test goal", "sport"=>"Football", "status"=>"draft", "views"=>0, "duration_seconds"=>30}, "controller"=>"api/clips", "action"=>"create"} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (0.9ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Test goal"], ["sport", "Football"], ["status", "draft"], ["views", 0], ["duration_seconds", 30], ["video_url", nil], ["created_at", "2026-10-21 08:31:35.102225"], ["updated_at", "2026-10-21 08:31:35.102225"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 7ms (Views: 1.3ms | ActiveRecord: 1.2ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mClip Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Started GET "/api/clips?search=Test+goal" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#index as HTML
+  Parameters: {"search"=>"Test goal"}
+  [1m[36mClip Load (0.8ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE (title ILIKE $1) ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $2[0m  [[nil, "%Test goal%"], ["LIMIT", 100]]
+Completed 200 OK in 5ms (Views: 2.8ms | ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+-------------------------------------------------------------------------------------------
+Api::ClipsControllerTest: test_playing_a_clip_increments_its_views_exactly_once_per_request
+-------------------------------------------------------------------------------------------
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mClip Create (1.0ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "Views test"], ["sport", "Football"], ["status", "published"], ["views", 3], ["duration_seconds", 60], ["video_url", nil], ["created_at", "2026-10-21 08:31:35.135227"], ["updated_at", "2026-10-21 08:31:35.135227"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/clips/17/view" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#register_view as JSON
+  Parameters: {"id"=>"17", "clip"=>{}}
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mClip Update All (0.5ms)[0m  [1m[33mUPDATE "clips" SET "views" = COALESCE("clips"."views", 0) + $1 WHERE "clips"."id" = $2[0m  [["views", 1], ["id", 17]]
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+Completed 200 OK in 7ms (Views: 0.1ms | ActiveRecord: 0.9ms (3 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+Started POST "/api/clips/17/view" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#register_view as JSON
+  Parameters: {"id"=>"17", "clip"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mClip Update All (0.4ms)[0m  [1m[33mUPDATE "clips" SET "views" = COALESCE("clips"."views", 0) + $1 WHERE "clips"."id" = $2[0m  [["views", 1], ["id", 17]]
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.9ms (3 queries, 0 cached) | GC: 0.0ms)
+Started GET "/api/dashboard" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::DashboardController#show as HTML
+  [1m[36mClip Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.4ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 16ms (Views: 4.2ms | ActiveRecord: 1.7ms (5 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mCACHE Clip Sum (0.2ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------
+Api::ClipsControllerTest: test_rejects_invalid_clip
+---------------------------------------------------
+Started POST "/api/clips" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#create as JSON
+  Parameters: {"clip"=>{"title"=>"", "sport"=>"Football", "duration_seconds"=>-1}}
+Completed 422 Unprocessable Content in 5ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+---------------------------------------------------------------------------------
+Api::ClipsControllerTest: test_view_endpoint_returns_not_found_for_a_missing_clip
+---------------------------------------------------------------------------------
+Started POST "/api/clips/999999999/view" for 127.0.0.1 at 2026-10-21 08:31:35 +0000
+Processing by Api::ClipsController#register_view as JSON
+  Parameters: {"id"=>"999999999", "clip"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 999999999], ["LIMIT", 1]]
+Filter chain halted as :load_clip rendered or redirected
+Completed 404 Not Found in 3ms (Views: 0.1ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m

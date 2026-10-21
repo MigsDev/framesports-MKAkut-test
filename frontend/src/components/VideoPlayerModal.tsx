@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
-import { CirclePlay, ExternalLink, MessageSquare, Star, X } from 'lucide-react';
+import { CirclePlay, ExternalLink, Eye, MessageSquare, Star, X } from 'lucide-react';
 import type { Clip, ClipFeedback, NewClipComment } from '../types';
 import { api } from '../api';
 import { resolveVideoSource } from '../utils/videoSource';
@@ -78,7 +78,12 @@ export default function VideoPlayerModal({ clip, onClose }: VideoPlayerModalProp
     <div className="modal-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
       <section className="player-modal feedback-modal" role="dialog" aria-modal="true" aria-label={`Watch ${clip.title}`}>
         <div className="player-heading">
-          <strong>{clip.title}</strong>
+          <div className="player-heading-title">
+            <strong>{clip.title}</strong>
+            <span className="player-view-count" aria-live="polite">
+              <Eye size={15} /> {clip.views.toLocaleString('en-US')} views
+            </span>
+          </div>
           <button type="button" className="icon-btn" onClick={onClose} aria-label="Close player"><X size={20}/></button>
         </div>
 

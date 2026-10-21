@@ -273,3 +273,328 @@ Processing by Api::ClipsController#index as */*
 Completed 200 OK in 8ms (Views: 7.3ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:54:11 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 684ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:54:11 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/api/clips" for 172.18.0.4 at 2026-10-21 07:55:24 +0000
+Processing by Api::ClipsController#create as */*
+  Parameters: {"clip"=>{"title"=>"test1", "sport"=>"Athletics", "status"=>"published", "views"=>0, "duration_seconds"=>60, "video_url"=>"https://www.youtube.com/shorts/yF2az6fQZOg"}}
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClip Create (36.8ms)[0m  [1m[32mINSERT INTO "clips" ("title", "sport", "status", "views", "duration_seconds", "video_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["title", "test1"], ["sport", "Athletics"], ["status", "published"], ["views", 0], ["duration_seconds", 60], ["video_url", "https://www.youtube.com/shorts/yF2az6fQZOg"], ["created_at", "2026-10-21 07:55:24.593111"], ["updated_at", "2026-10-21 07:55:24.593111"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] Enqueued TelegramNotificationJob (Job ID: b9d2d15f-73f9-4281-9742-8a40b958010c) to Async(default) with arguments: "FrameSports: published video test1 (clip #11)"
+Completed 201 Created in 246ms (Views: 1.0ms | ActiveRecord: 46.2ms (1 query, 0 cached) | GC: 29.7ms)
+
+
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 07:55:24 +0000
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 07:55:24 +0000
+Processing by Api::DashboardController#show as */*
+Processing by Api::ClipsController#index as */*
+  Parameters: {"dashboard"=>{}}
+[ActiveJob] [TelegramNotificationJob] [b9d2d15f-73f9-4281-9742-8a40b958010c] Performing TelegramNotificationJob (Job ID: b9d2d15f-73f9-4281-9742-8a40b958010c) from Async(default) enqueued at 2026-10-21T07:55:24.821290594Z with arguments: "FrameSports: published video test1 (clip #11)"
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Count (2.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (1.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.5ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (1.7ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 23ms (Views: 2.3ms | ActiveRecord: 6.9ms (5 queries, 0 cached) | GC: 0.7ms)
+
+
+  [1m[36mClip Load (28.7ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 33ms (Views: -3.4ms | ActiveRecord: 34.8ms (1 query, 0 cached) | GC: 1.2ms)
+
+
+[ActiveJob] [TelegramNotificationJob] [b9d2d15f-73f9-4281-9742-8a40b958010c] Telegram notification failed: RuntimeError: Telegram delivery failed (HTTP 403)
+[ActiveJob] [TelegramNotificationJob] [b9d2d15f-73f9-4281-9742-8a40b958010c] Performed TelegramNotificationJob (Job ID: b9d2d15f-73f9-4281-9742-8a40b958010c) from Async(default) in 1248.52ms
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:55:38 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (1.0ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (1.1ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.5ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 30ms (Views: 9.5ms | ActiveRecord: 3.1ms (4 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:55:38 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 11ms (Views: 1.0ms | ActiveRecord: 1.3ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:55:57 +0000
+Processing by Api::ClipCommentsController#create as */*
+  Parameters: {"comment"=>{"author"=>"user11", "body"=>"good run", "kind"=>"comment", "rating"=>3}, "clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (1.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClipComment Create (9.0ms)[0m  [1m[32mINSERT INTO "clip_comments" ("clip_id", "author", "body", "rating", "kind", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["clip_id", 11], ["author", "user11"], ["body", "good run"], ["rating", 3], ["kind", "comment"], ["created_at", "2026-10-21 07:55:57.529833"], ["updated_at", "2026-10-21 07:55:57.529833"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] Enqueued TelegramNotificationJob (Job ID: bb9999ca-415c-4ef2-9cb7-38fef4ea5de1) to Async(default) with arguments: "FrameSports: New viewer comment on test1 (clip #11) by user11: good run"
+Completed 201 Created in 40ms (Views: 1.2ms | ActiveRecord: 12.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:55:57 +0000
+[ActiveJob] [TelegramNotificationJob] [bb9999ca-415c-4ef2-9cb7-38fef4ea5de1] Performing TelegramNotificationJob (Job ID: bb9999ca-415c-4ef2-9cb7-38fef4ea5de1) from Async(default) enqueued at 2026-10-21T07:55:57.550593627Z with arguments: "FrameSports: New viewer comment on test1 (clip #11) by user11: good run"
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.6ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.3ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 22ms (Views: 8.3ms | ActiveRecord: 1.9ms (4 queries, 0 cached) | GC: 1.2ms)
+
+
+[ActiveJob] [TelegramNotificationJob] [bb9999ca-415c-4ef2-9cb7-38fef4ea5de1] Telegram notification failed: RuntimeError: Telegram delivery failed (HTTP 403)
+[ActiveJob] [TelegramNotificationJob] [bb9999ca-415c-4ef2-9cb7-38fef4ea5de1] Performed TelegramNotificationJob (Job ID: bb9999ca-415c-4ef2-9cb7-38fef4ea5de1) from Async(default) in 1228.59ms
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:56:07 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.4ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.3ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 7ms (Views: 0.9ms | ActiveRecord: 1.4ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:56:07 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.4ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.3ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 7ms (Views: 0.9ms | ActiveRecord: 1.5ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:56:19 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.4ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 7ms (Views: 0.9ms | ActiveRecord: 1.3ms (4 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 07:56:19 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 19ms (Views: 1.7ms | ActiveRecord: 1.2ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/10/comments" for 172.18.0.4 at 2026-10-21 07:56:56 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"10", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 10], ["LIMIT", 100]]
+Completed 200 OK in 11ms (Views: 1.1ms | ActiveRecord: 1.3ms (4 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/api/clips/10/comments" for 172.18.0.4 at 2026-10-21 07:56:56 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"10", "clip_comment"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 10]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 10], ["LIMIT", 100]]
+Completed 200 OK in 10ms (Views: 0.9ms | ActiveRecord: 1.2ms (4 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/api/clips/9/comments" for 172.18.0.4 at 2026-10-21 07:56:58 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"9", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 9]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 9]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 9], ["LIMIT", 100]]
+Completed 200 OK in 5ms (Views: 1.1ms | ActiveRecord: 1.2ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/9/comments" for 172.18.0.4 at 2026-10-21 07:56:58 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"9", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.2ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 9]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 9]]
+  [1m[36mClipComment Load (0.2ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 9], ["LIMIT", 100]]
+Completed 200 OK in 7ms (Views: 2.0ms | ActiveRecord: 1.1ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:57:34 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:57:34 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:57:37 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:57:38 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 16ms (Views: 9.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:57:38 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4335" for 172.18.0.4 at 2026-10-21 07:57:40 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4335", "sports_feed"=>{}}
+Completed 200 OK in 542ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4387" for 172.18.0.4 at 2026-10-21 07:57:42 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4387", "sports_feed"=>{}}
+Completed 200 OK in 321ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4391" for 172.18.0.4 at 2026-10-21 07:57:45 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4391", "sports_feed"=>{}}
+Completed 200 OK in 312ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4418" for 172.18.0.4 at 2026-10-21 07:57:48 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4418", "sports_feed"=>{}}
+Completed 200 OK in 314ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/sports_feeds?league=4328" for 172.18.0.4 at 2026-10-21 07:57:51 +0000
+Processing by Api::SportsFeedsController#index as */*
+  Parameters: {"league"=>"4328", "sports_feed"=>{}}
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (4.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 08:32:26 +0000
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 08:32:26 +0000
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (89.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Count (3.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (1.8ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Load (4.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 37ms (Views: 26.1ms | ActiveRecord: 139.8ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+  [1m[36mClip Count (23.8ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (1.6ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 287ms (Views: 6.2ms | ActiveRecord: 149.9ms (5 queries, 0 cached) | GC: 33.2ms)
+
+
+Started GET "/api/clips" for 172.18.0.4 at 2026-10-21 08:32:27 +0000
+Started GET "/api/dashboard" for 172.18.0.4 at 2026-10-21 08:32:27 +0000
+Processing by Api::ClipsController#index as */*
+  Parameters: {"clip"=>{}}
+  [1m[36mClip Load (1.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 100]]
+Completed 200 OK in 7ms (Views: 5.2ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Processing by Api::DashboardController#show as */*
+  Parameters: {"dashboard"=>{}}
+  [1m[36mClip Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips"[0m
+  [1m[36mClip Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clips" WHERE "clips"."status" = $1[0m  [["status", "published"]]
+  [1m[36mClip Sum (0.2ms)[0m  [1m[34mSELECT SUM("clips"."views") FROM "clips"[0m
+  [1m[36mClip Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "clips"."sport" AS "clips_sport" FROM "clips" GROUP BY "clips"."sport"[0m
+  [1m[36mClip Load (0.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" ORDER BY "clips"."created_at" DESC, "clips"."id" DESC LIMIT $1[0m  [["LIMIT", 5]]
+Completed 200 OK in 14ms (Views: 7.0ms | ActiveRecord: 1.3ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/api/clips/11/view" for 172.18.0.4 at 2026-10-21 08:32:31 +0000
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 08:32:31 +0000
+Processing by Api::ClipsController#register_view as */*
+  Parameters: {"id"=>"11", "clip"=>{}}
+  [1m[36mClip Load (1.0ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClip Update All (2.9ms)[0m  [1m[33mUPDATE "clips" SET "views" = COALESCE("clips"."views", 0) + $1 WHERE "clips"."id" = $2[0m  [["views", 1], ["id", 11]]
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+Completed 200 OK in 28ms (Views: 0.2ms | ActiveRecord: 4.3ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.3ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (1.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.6ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 55ms (Views: 25.7ms | ActiveRecord: 7.5ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 08:32:31 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.4ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (1.1ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 21ms (Views: 4.1ms | ActiveRecord: 2.3ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/api/clips/11/view" for 172.18.0.4 at 2026-10-21 08:32:37 +0000
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 08:32:37 +0000
+Processing by Api::ClipsController#register_view as */*
+  Parameters: {"id"=>"11", "clip"=>{}}
+  [1m[36mClip Load (0.5ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClip Update All (1.3ms)[0m  [1m[33mUPDATE "clips" SET "views" = COALESCE("clips"."views", 0) + $1 WHERE "clips"."id" = $2[0m  [["views", 1], ["id", 11]]
+Processing by Api::ClipCommentsController#index as */*
+  [1m[36mClip Load (2.1ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+Completed 200 OK in 15ms (Views: 0.6ms | ActiveRecord: 3.8ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mClip Load (3.2ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.4ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.7ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 17ms (Views: 4.4ms | ActiveRecord: 4.6ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/clips/11/comments" for 172.18.0.4 at 2026-10-21 08:32:37 +0000
+Processing by Api::ClipCommentsController#index as */*
+  Parameters: {"clip_id"=>"11", "clip_comment"=>{}}
+  [1m[36mClip Load (0.4ms)[0m  [1m[34mSELECT "clips".* FROM "clips" WHERE "clips"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mClipComment Average (0.3ms)[0m  [1m[34mSELECT AVG("clip_comments"."rating") FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 AND "clip_comments"."rating" IS NOT NULL[0m  [["clip_id", 11]]
+  [1m[36mClipComment Load (0.3ms)[0m  [1m[34mSELECT "clip_comments".* FROM "clip_comments" WHERE "clip_comments"."clip_id" = $1 ORDER BY "clip_comments"."created_at" DESC, "clip_comments"."id" DESC LIMIT $2[0m  [["clip_id", 11], ["LIMIT", 100]]
+Completed 200 OK in 10ms (Views: 1.3ms | ActiveRecord: 1.3ms (4 queries, 0 cached) | GC: 0.0ms)
+
+

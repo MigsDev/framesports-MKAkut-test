@@ -8,6 +8,12 @@ examples = [
 ]
 
 examples.each do |title, sport, status, views, duration|
-  clip = Clip.find_or_initialize_by(title: title)
-  clip.update!(sport: sport, status: status, views: views, duration_seconds: duration)
+  # Only create missing demo records. Updating an existing record here would
+  # overwrite real view counts and manual edits on every Docker restart.
+  Clip.find_or_create_by!(title: title) do |clip|
+    clip.sport = sport
+    clip.status = status
+    clip.views = views
+    clip.duration_seconds = duration
+  end
 end

@@ -8,14 +8,11 @@ gem "puma", ">= 6.0"
 gem "rack-cors"
 gem "bootsnap", require: false
 
-# Development and test debugging tools
 group :development, :test do
-  gem "debug",
-      platforms: %i[mri windows],
-      require: "debug/prelude"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
 end
 
-# Testing dependencies
+# Provides the stub helper used by the Rails integration tests.
 group :test do
   gem "minitest-mock"
 end

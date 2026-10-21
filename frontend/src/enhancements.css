@@ -162,3 +162,18 @@
 .feedback-item p{font-size:13px;color:#455871;white-space:pre-wrap;overflow-wrap:anywhere;margin:9px 0 0}
 .feedback-empty{font-size:13px;color:#8392a7}
 @media(max-width:600px){.feedback-fields{grid-template-columns:1fr}}
+
+/* Recorded view counts are server-managed and cannot be edited by clip authors. */
+.views-readonly {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+.views-readonly strong { color: #334155; font-size: 12px; }
+.views-readonly span { font-size: 17px; font-weight: 700; color: #12213e; }
+.views-readonly small { color: #71809a; font-size: 11px; line-height: 1.35; }
+
+.player-heading-title { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.player-view-count { color: #64748b; font-size: 12px; display: inline-flex; align-items: center; gap: 5px; }

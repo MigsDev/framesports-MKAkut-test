@@ -50,6 +50,7 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [viewError, setViewError] = useState('');
 
   // Search and filtering
   const [search, setSearch] = useState('');
@@ -158,6 +159,39 @@ function App() {
   }
 
   // ==========================================
+  // RECORD A VIDEO VIEW
+  // ==========================================
+
+  function playClip(clip: Clip) {
+    // Open the modal immediately; let Rails confirm the view asynchronously.
+    setPlaying(clip);
+    setViewError('');
+
+    void api.registerView(clip.id).then(({ views }) => {
+      // Use the authoritative PostgreSQL count for this clip.
+      setClips(current => current.map(item =>
+        item.id === clip.id ? { ...item, views: Math.max(item.views, views) } : item
+      ));
+
+      // Keep the currently open video and the recent-clips display in sync.
+      setPlaying(current => current?.id === clip.id
+        ? { ...current, views: Math.max(current.views, views) }
+        : current);
+
+      setDashboard(current => current ? {
+        ...current,
+        total_views: current.total_views + 1,
+        recent_clips: current.recent_clips.map(item =>
+          item.id === clip.id ? { ...item, views: Math.max(item.views, views) } : item
+        ),
+      } : current);
+    }).catch(reason => {
+      const message = reason instanceof Error ? reason.message : 'Unknown error';
+      setViewError(`The player opened, but the view was not recorded: ${message}`);
+    });
+  }
+
+  // ==========================================
   // RENDER
   // ==========================================
 
@@ -220,6 +254,13 @@ function App() {
             </div>
           )}
 
+          {viewError && (
+            <div className="notice error" role="alert">
+              {viewError}
+              <button type="button" onClick={() => setViewError('')}>Dismiss</button>
+            </div>
+          )}
+
           {/* DASHBOARD STATISTICS */}
           {view !== 'library' && view !== 'fixtures' && <section id="analytics">
             <StatsCards dashboard={dashboard} />
@@ -231,7 +272,7 @@ function App() {
               {!dashboard && <p className="empty">Loading sport distribution...</p>}
             </div>
             <div className="library-panel analytics-card"><div className="section-heading"><div><h2>Recently added</h2><p>The five latest highlights</p></div></div>
-              {dashboard?.recent_clips.map(clip => <button key={clip.id} className="recent-clip" onClick={() => setPlaying(clip)}><span>{clip.title}<small>{clip.sport} · {clip.status}</small></span><span>{clip.views.toLocaleString()} views</span></button>)}
+              {dashboard?.recent_clips.map(clip => <button key={clip.id} className="recent-clip" onClick={() => playClip(clip)}><span>{clip.title}<small>{clip.sport} · {clip.status}</small></span><span>{clip.views.toLocaleString()} views</span></button>)}
             </div>
           </section>}
 
@@ -239,7 +280,7 @@ function App() {
             <AnalyticsReports
               clips={clips}
               bySport={dashboard?.by_sport ?? {}}
-              onPlay={setPlaying}
+              onPlay={playClip}
             />
           )}
 
@@ -278,7 +319,7 @@ function App() {
               onStatusChange={setStatus}
               onSportChange={setSport}
               onEdit={setEditing}
-              onPlay={setPlaying}
+              onPlay={playClip}
               onDelete={remove}
             />
 
