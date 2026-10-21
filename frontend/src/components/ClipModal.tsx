@@ -8,7 +8,6 @@ const EMPTY_CLIP: ClipInput = {
   title: '',
   sport: 'Football',
   status: 'draft',
-  views: 0,
   duration_seconds: 60,
   video_url: '',
 };
@@ -26,7 +25,6 @@ function toEditableClip(clip: Clip | null): ClipInput {
     title: clip.title,
     sport: clip.sport,
     status: clip.status,
-    views: clip.views,
     duration_seconds: clip.duration_seconds,
     video_url: clip.video_url ?? '',
   };
@@ -120,16 +118,11 @@ export default function ClipModal({ selected, onClose, onSave }: ClipModalProps)
             />
           </label>
 
-          <label>
-            Views
-            <input
-              required
-              type="number"
-              min={0}
-              value={form.views}
-              onChange={event => setField('views', Number(event.target.value))}
-            />
-          </label>
+          <div className="views-readonly" aria-label="Recorded video views">
+            <strong>Recorded views</strong>
+            <span>{selected ? selected.views.toLocaleString('en-US') : '0'}</span>
+            <small>Increases automatically when someone opens the video.</small>
+          </div>
         </div>
 
         <label>

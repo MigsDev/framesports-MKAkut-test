@@ -1,4 +1,4 @@
-import type { Clip, ClipInput, Dashboard, ClipFeedback, ClipComment, NewClipComment, SportsFeedResponse } from './types';
+import type { Clip, ClipInput, Dashboard, ClipFeedback, ClipComment, NewClipComment, SportsFeedResponse, RegisteredView } from './types';
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`/api${path}`, {
@@ -22,6 +22,7 @@ export const api = {
   comments: (clipId: number) => request<ClipFeedback>(`/clips/${clipId}/comments`),
   addComment: (clipId: number, comment: NewClipComment) => request<ClipComment>(`/clips/${clipId}/comments`, { method: 'POST', body: JSON.stringify({ comment }) }),
   dashboard: () => request<Dashboard>('/dashboard'),
+  registerView: (clipId: number) => request<RegisteredView>(`/clips/${clipId}/view`, { method: 'POST' }),
   clips: (query = '') => request<Clip[]>(`/clips${query}`),
   create: (clip: ClipInput) => request<Clip>('/clips', { method: 'POST', body: JSON.stringify({ clip }) }),
   update: (id: number, clip: ClipInput) => request<Clip>(`/clips/${id}`, { method: 'PATCH', body: JSON.stringify({ clip }) }),

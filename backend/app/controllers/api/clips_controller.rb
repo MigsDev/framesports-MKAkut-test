@@ -1,6 +1,6 @@
 module Api
   class ClipsController < ApplicationController
-    before_action :load_clip, only: %i[show update destroy]
+    before_action :load_clip, only: %i[show update destroy register_view]
 
     def index
       clips = Clip.recent_first
@@ -39,6 +39,14 @@ module Api
       head :no_content
     end
 
+    # Each explicit player-opening click calls this endpoint once.
+    # The increment happens atomically in PostgreSQL, so concurrent viewers
+    # cannot overwrite each other's counts.
+    def register_view
+      Clip.increment_counter(:views, @clip.id)
+      render json: { id: @clip.id, views: @clip.reload.views }
+    end
+
     private
 
     def notify_published(clip)
@@ -53,7 +61,7 @@ module Api
     end
 
     def clip_params
-      params.require(:clip).permit(:title, :sport, :status, :views, :duration_seconds, :video_url)
+      params.require(:clip).permit(:title, :sport, :status, :duration_seconds, :video_url)
     end
 
     def render_validation_errors(record)
